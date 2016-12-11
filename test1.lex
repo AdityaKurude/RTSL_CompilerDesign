@@ -3,7 +3,8 @@
 %option noyywrap
 
 %{
-#include "test0.yy.h"
+#include "test1.yy.h"
+int line_no = 1; 
 %}  
 LETTER	[a-zA-Z]
 DIGIT	[0-9]
@@ -28,12 +29,12 @@ LEADING_EXPO_FLOAT_VALUE 	{DIGIT}+[eE]("-"|"+")?{DIGIT}+(f|"lf"|"F"|"LF")?
 RTSL_CLASS	"class"
 RTSL_MATERIAL	"rt_Material"
 
-C_KEYWORDS	"break"|"case"|"const"|"continue"|"default"|"do"|"double"|"else"|"enum"|"extern"|"for"|"goto"|"if"|"sizeof"|"static"|"struct"|"switch"|"typedef"|"union"|"unsigned"|"while"
+C_KEYWORDS	"case"|"const"|"continue"|"default"|"double"|"enum"|"extern"|"goto"|"sizeof"|"static"|"struct"|"switch"|"typedef"|"union"|"unsigned"
 RTSL_KEYWORDS	"illuminance"|"ambient"
 BUILT_IN_FUNCTION	"dominantAxis"|"dot"|"hit"|"inside"|"inverse"|"luminance"|"max"|"min"|"normalize"|"perpendicularTo"|"pow"|"rand"|"reflect"|"sqrt"|"trace"
 
-RTSL_TYPE	"int"|"float"|"bool"|"void"|"rt_Primitive"|"rt_Camera"|"rt_Texture"|"rt_Light"
-
+RTSL_TYPE	"rt_Primitive"|"rt_Camera"|"rt_Texture"|"rt_Light"
+GEN_TYPE	"int""float"
 VECTOR_TYPE	[i|b]?vec[2-4]
 
 STATE	[r][t][_]({LETTER}+[0-9"_"]*)+
@@ -66,63 +67,76 @@ SWIZZLE	[.]{IDENTIFIER}
 					str++;
 				}
 			}
-RTSL_MATERIAL	{return(MATERIAL);}
-
-RTSL_CLASS	{return(CLASS);}
-
-true|false	{return(BOOL);}
-
-{HEX_VALUE} {return(INT);}
-
-{NORMAL_INT} {return(INT);}
-
-{NORMAL_FLOAT_VALUE} {return(FLOAT);}
-
-{FLOAT_WITH_TRAILING_DOT} {return(FLOAT);}
-
-{TRAILING_EXPO_FLOAT_VALUE} {return(FLOAT);}
-
-{LEADING_EXPO_FLOAT_VALUE} {return(FLOAT);}
-
-{VARIABLE_QUALIFIERS}|{CLASS_SCOPE_QUALIFIERS}	{return(QUALIFIER);}
 
 
-{RTSL_TYPE}|{VECTOR_TYPE}	{ return(TYPE); }
+{RTSL_MATERIAL}	{return MATERIAL;}
+
+{RTSL_CLASS}	{return CLASS;}
+
+true|false	{return BOOL;}
+
+{HEX_VALUE} {return INT;}
+
+{NORMAL_INT} {return INT;}
+
+{NORMAL_FLOAT_VALUE} {return FLOAT;}
+
+{FLOAT_WITH_TRAILING_DOT} {return FLOAT;}
+
+{TRAILING_EXPO_FLOAT_VALUE} {return FLOAT;}
+
+{LEADING_EXPO_FLOAT_VALUE} {return FLOAT;}
+
+{VARIABLE_QUALIFIERS}|{CLASS_SCOPE_QUALIFIERS}	{return QUALIFIER;}
+
+
+{RTSL_TYPE}|{VECTOR_TYPE}|{GEN_TYPE}	{ return TYPE; }
 
 
 
-{STATE}	{ return(STATE); }
+{STATE}	{ return STATE; }
 
-{C_KEYWORDS}|{RTSL_KEYWORDS}|{BUILT_IN_FUNCTION}	{ return(KEYWORD); }
+{C_KEYWORDS}|{RTSL_KEYWORDS}|{BUILT_IN_FUNCTION}	{ return KEYWORD; }
 
-{SWIZZLE}	{return(SWIZZLE);}
-
-[+]	{return(PLUS);}
-[*]	{return(MUL);}
-[-]	{return(MINUS);}
-[/]	{return(DIV);}
-[=]	{return(ASSIGN);}
-[=][=]	{return(EQUAL);}
-[!][=]	{return(NOT_EQUAL);}
-[<]	{return(LT);}
-[<][=]	{return(LE);}
-[>]	{return(GT);}
-[>][=]	{return(GE);}
-[,]	{return(COMMA);}
-[:]	{return(COLON);}
-[;]	{return(SEMICOLON);}
-[(]	{return(LPARENTHESIS);}
-[)]	{return(RPARENTHESIS);}
-"["	{return(LBRACKET);}
-"]"	{return(RBRACKET);}
-[{]	{return(LBRACE);}
-[}]	{return(RBRACE);}
-[&][&]	{return(AND);}
-"|""|"	{return(OR);}
-"+""+"	{return(INC);}
-"-""-"	{return(DEC);}
+{SWIZZLE}	{return SWIZZLE;}
 
 
-{IDENTIFIER} {return(IDENTIFIER);}
+"+"	{ return ADD; }
+"*"	{ return MULTIPLY; }
+"-"	{ return SUB; }
+"/"	{ return DIVIDE; }
+"="	{ return ASSIGN; }
+"=""="	{ return EQUAL; }
+"!""="	{ return N_EQUAL; }
+"<"	{ return LT; }
+"<""="	{ return LE; }
+">"	{ return GT; }
+">""="	{ return GE; }
+","	{ return COMMA_OP; }
+":"	{ return COLON; }
+";"	{ return SEMICOLON; }
+"("	{ return LPARENTHESIS; }
+")"	{ return RPARENTHESIS; }
+"["	{ return LBRACKET; }
+"]"	{ return RBRACKET; }
+"{"	{ return LBRACE; }
+"}"	{ return RBRACE; }
+"&&"	{ return AND_OP; }
+"|""|"	{ return OR_OP; }
+"+""+"	{ return INC_OP; }
+"-""-"	{ return DEC_OP; }
+
+
+"while"					{ return WHILE; }
+"break"					{ return BREAK; }
+"void"					{ return VOID; }
+"bool"                                 	{ return BOOL; }
+"return"				{ return RETURN; }
+"do"					{ return DO; }
+"for"					{ return FOR; }
+"if"					{ return IF; }
+"else"					{ return ELSE; }
+
+{IDENTIFIER} {return IDENTIFIER;}
 
 %%
