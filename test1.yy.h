@@ -30,8 +30,8 @@
    This special exception was added by the Free Software Foundation in
    version 2.2 of Bison.  */
 
-#ifndef YY_YY_TEST0_YY_H_INCLUDED
-# define YY_YY_TEST0_YY_H_INCLUDED
+#ifndef YY_YY_TEST1_YY_H_INCLUDED
+# define YY_YY_TEST1_YY_H_INCLUDED
 /* Debug traces.  */
 #ifndef YYDEBUG
 # define YYDEBUG 0
@@ -48,29 +48,25 @@ extern int yydebug;
     IDENTIFIER = 258,
     INT = 259,
     TYPE = 260,
-    FLOAT = 261,
-    QUANTIFIER = 262,
-    IF = 263,
-    ELSE = 264,
-    RETURN = 265,
-    CLASS = 266,
-    MATERIAL = 267,
-    CAMERA = 268,
-    PLUS = 269,
-    MUL = 270,
-    MINUS = 271,
-    DIV = 272,
-    ASSIGN = 273,
-    COLON = 274,
-    SEMICOLON = 275,
-    LT = 276,
-    LPARENTHESIS = 277,
-    RPARENTHESIS = 278,
-    LBRACKET = 279,
-    RBRACKET = 280,
-    LBRACE = 281,
-    RBRACE = 282,
-    ELLIPSIS = 283
+    IF = 261,
+    ELSE = 262,
+    RETURN = 263,
+    CLASS = 264,
+    MATERIAL = 265,
+    PLUS = 266,
+    MUL = 267,
+    MINUS = 268,
+    DIV = 269,
+    ASSIGN = 270,
+    COLON = 271,
+    SEMICOLON = 272,
+    LT = 273,
+    LPARENTHESIS = 274,
+    RPARENTHESIS = 275,
+    LBRACKET = 276,
+    RBRACKET = 277,
+    LBRACE = 278,
+    RBRACE = 279
   };
 #endif
 
@@ -86,4 +82,4 @@ extern YYSTYPE yylval;
 
 int yyparse (void);
 
-#endif /* !YY_YY_TEST0_YY_H_INCLUDED  */
+#endif /* !YY_YY_TEST1_YY_H_INCLUDED  */

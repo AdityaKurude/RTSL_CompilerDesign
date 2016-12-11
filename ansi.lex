@@ -73,7 +73,33 @@ static int check_type(void);
 "void"					{ return(VOID); }
 "volatile"				{ return(VOLATILE); }
 "while"					{ return(WHILE); }
+"_Alignas"                              { return ALIGNAS; }
+"_Alignof"                              { return ALIGNOF; }
+"_Atomic"                               { return ATOMIC; }
+"_Bool"                                 { return BOOL; }
+"_Complex"                              { return COMPLEX; }
+"_Generic"                              { return GENERIC; }
+"_Imaginary"                            { return IMAGINARY; }
+"_Noreturn"                             { return NORETURN; }
+"_Static_assert"                        { return STATIC_ASSERT; }
+"_Thread_local"                         { return THREAD_LOCAL; }
+"__func__"                              { return FUNC_NAME; }
 
+{L}{A}*					{ return check_type(); }
+
+{HP}{H}+{IS}?				{ return I_CONSTANT; }
+{NZ}{D}*{IS}?				{ return I_CONSTANT; }
+"0"{O}*{IS}?				{ return I_CONSTANT; }
+{CP}?"'"([^'\\\n]|{ES})+"'"		{ return I_CONSTANT; }
+
+{D}+{E}{FS}?				{ return F_CONSTANT; }
+{D}*"."{D}+{E}?{FS}?			{ return F_CONSTANT; }
+{D}+"."{E}?{FS}?			{ return F_CONSTANT; }
+{HP}{H}+{P}{FS}?			{ return F_CONSTANT; }
+{HP}{H}*"."{H}+{P}{FS}?			{ return F_CONSTANT; }
+{HP}{H}+"."{P}{FS}?			{ return F_CONSTANT; }
+
+({SP}?\"([^"\\\n]|{ES})*\"{WS}*)+	{ return STRING_LITERAL; }
 
 "..."					{ return ELLIPSIS; }
 ">>="					{ return RIGHT_ASSIGN; }
@@ -121,8 +147,45 @@ static int check_type(void);
 "^"					{ return '^'; }
 "|"					{ return '|'; }
 "?"					{ return '?'; }
-"class"     {return 'CLASS'; }
-"rt_material" {return 'MATERIAL';}
 
 {WS}+					{ /* whitespace separates tokens */ }
 .					{ /* discard bad characters */ }
+
+%%
+
+int yywrap(void)        /* called at end of input */
+{
+    return 1;           /* terminate now */
+}
+
+static void comment(void)
+{
+    int c;
+
+    while ((c = input()) != 0)
+        if (c == '*')
+        {
+            while ((c = input()) == '*')
+                ;
+
+            if (c == '/')
+                return;
+
+            if (c == 0)
+                break;
+        }
+    yyerror("unterminated comment");
+}
+
+static int check_type(void)
+{
+    switch (sym_type(yytext))
+    {
+    case TYPEDEF_NAME:                /* previously defined */
+        return TYPEDEF_NAME;
+    case ENUMERATION_CONSTANT:        /* previously defined */
+        return ENUMERATION_CONSTANT;
+    default:                          /* includes undefined */
+        return IDENTIFIER;
+    }
+}
