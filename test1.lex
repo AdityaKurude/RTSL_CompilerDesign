@@ -5,13 +5,14 @@
 %{
 #include "test0.yy.h"
 %}  
+LETTER	[a-zA-Z]
+DIGIT	[0-9]
 
-LETTER		[a-zA-Z]
-RTSL_CLASS	"class"
-RTSL_MATERIAL	"rt_Material"
-IDENTIFIER	("_"[.]+)|({LETTER}+[0-9a-zA-Z"_"]*)
+MULTILINE_COMMENTS	[/][*][^*]*[*]+([^*/][^*]*[*]+)*[/]
+SINGLELINE_COMMENT	(("/""/")(.)*)
 
-CONDITIONAL_STATMENT	"if"|"else"
+VARIABLE_QUALIFIERS 	"attribute"|"uniform"|"varying"|"const"
+CLASS_SCOPE_QUALIFIERS	"const"|"public"|"private"|"scratch"
 
 
 NORMAL_INT	{DIGIT}+[uU]?
@@ -24,26 +25,52 @@ FLOAT_WITH_TRAILING_DOT		({DIGIT}+\.)(f|"lf"|"F"|"LF")?
 TRAILING_EXPO_FLOAT_VALUE	({DIGIT}*\.{DIGIT}*)[eE]{DIGIT}+(f|"lf"|"F"|"LF")?
 LEADING_EXPO_FLOAT_VALUE 	{DIGIT}+[eE]("-"|"+")?{DIGIT}+(f|"lf"|"F"|"LF")?
 
-RETURN_KEYWORD	"return"
+RTSL_CLASS	"class"
+RTSL_MATERIAL	"rt_Material"
 
-VOID_KEYWORD	"void"
+C_KEYWORDS	"break"|"case"|"const"|"continue"|"default"|"do"|"double"|"else"|"enum"|"extern"|"for"|"goto"|"if"|"sizeof"|"static"|"struct"|"switch"|"typedef"|"union"|"unsigned"|"while"
+RTSL_KEYWORDS	"illuminance"|"ambient"
+BUILT_IN_FUNCTION	"dominantAxis"|"dot"|"hit"|"inside"|"inverse"|"luminance"|"max"|"min"|"normalize"|"perpendicularTo"|"pow"|"rand"|"reflect"|"sqrt"|"trace"
+
+RTSL_TYPE	"int"|"float"|"bool"|"void"|"rt_Primitive"|"rt_Camera"|"rt_Texture"|"rt_Light"
+
+VECTOR_TYPE	[i|b]?vec[2-4]
+
+STATE	[r][t][_]({LETTER}+[0-9"_"]*)+
+
+
+IDENTIFIER	("_"[.]+)|({LETTER}+[0-9a-zA-Z"_"]*)
+ERROR_IDENTIFIER	[0-9]+{LETTER}*[0-9"_"]*
+
+SWIZZLE	[.]{IDENTIFIER}	
 
 %%
 
 [ \t\r\v\f]*	{} /*	Remove all Blanks:Includes spaces, tabs, newline and carriage return, vertical tab and form-feed.
 			Need to add line number addition logic for error printing */
 
-"\n"	{}
+"\n"	{line_no++;}
 
-{VOID_KEYWORD}	{return VOID;}
 
-{RETURN_KEYWORD}	{return RETURN;}
+{SINGLELINE_COMMENT}	{}
 
-{RTSL_MATERIAL}	{return MATERIAL;}
+{MULTILINE_COMMENTS}	{
+				int count =0;				
+				char* str = yytext;
 
-{RTSL_CLASS}	{return CLASS;}
+				for(count =0;count < yyleng; count++)
+				{
+					if('\n' == *str)
+					line_no++;
+					
+					str++;
+				}
+			}
+RTSL_MATERIAL	{return(MATERIAL);}
 
-{CONDITIONAL_STATMENT}	{return CONDSTATEMENT;}
+RTSL_CLASS	{return(CLASS);}
+
+true|false	{return(BOOL);}
 
 {HEX_VALUE} {return(INT);}
 
@@ -57,6 +84,18 @@ VOID_KEYWORD	"void"
 
 {LEADING_EXPO_FLOAT_VALUE} {return(FLOAT);}
 
+{VARIABLE_QUALIFIERS}|{CLASS_SCOPE_QUALIFIERS}	{return(QUALIFIER);}
+
+
+{RTSL_TYPE}|{VECTOR_TYPE}	{ return(TYPE); }
+
+
+
+{STATE}	{ return(STATE); }
+
+{C_KEYWORDS}|{RTSL_KEYWORDS}|{BUILT_IN_FUNCTION}	{ return(KEYWORD); }
+
+{SWIZZLE}	{return(SWIZZLE);}
 
 [+]	{return(PLUS);}
 [*]	{return(MUL);}
@@ -86,7 +125,4 @@ VOID_KEYWORD	"void"
 
 {IDENTIFIER} {return(IDENTIFIER);}
 
-
 %%
-
-
