@@ -1,4 +1,3 @@
-/* Example 2, Simple Calculator Parser */
 %{
 #include <stdio.h>
 
@@ -6,36 +5,39 @@ extern int yylex(); // Declared by lexer
 void yyerror(const char *s); // Declared later in file
 %}
 
-/* declare tokens */
-//%glr-parser
-//%expect-sr
-%token CLASS
-%token MATERIAL
-%token IDENTIFIER
-%token COLON VOID
-%token SEMICOLON CONDSTATEMENT FLOAT INT LBRACKET RBRACKET LBRACE RBRACE
+%glr-parser
+%token	IDENTIFIER INT TYPE
+%token IF ELSE RETURN
+%token CLASS MATERIAL
+%token PLUS MUL MINUS DIV ASSIGN COLON SEMICOLON LT LPARENTHESIS RPARENTHESIS LBRACKET RBRACKET LBRACE RBRACE
+
 
 %%
 
+statement
+ :function_call
+ |declaration
+ ;
 
-declar: term expr COLON MATERIAL SEMICOLON { printf("SHADER_DEF"); }
-	;
+function_call
+  :IDENTIFIER LPARENTHESIS parameter RPARENTHESIS SEMICOLON {printf("FUNCTION CALL"); }
+ 	;
 
-functiondecl:datatype IDENTIFIER
-	| FLOAT
-	| VOID
-	;
+declaration
+  :class parameter COLON MATERIAL SEMICOLON      {printf("SHADER DEF material"); }
+   ;
 
-datatype: INT
-	| FLOAT
-	| VOID
-	;
+ parameter_list
+   :parameter
+   |parameter_list parameter
+   ;
 
-expr:	IDENTIFIER	{ printf("ID"); }
-	;
-
-term:	CLASS	{ printf("material"); }
-	;
+ parameter
+   :IDENTIFIER
+   ;
+class
+   :CLASS
+   ;
 
 
 %%

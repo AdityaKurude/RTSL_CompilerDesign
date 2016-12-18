@@ -1,3 +1,11 @@
+%option noyywrap
+%{
+#include "ansi.yy.h"
+int line_no=0;
+%}
+
+
+
 %e  1019
 %p  2807
 %n  371
@@ -23,21 +31,13 @@ WS  [ \t\v\n\f]
 
 %{
 #include <stdio.h>
-#include "y.tab.h"
 
 extern void yyerror(const char *);  /* prints grammar violation message */
-
-extern int sym_type(const char *);  /* returns type from symbol table */
-
-#define sym_type(identifier) IDENTIFIER /* with no symbol table, fake it */
-
-static void comment(void);
-static int check_type(void);
 %}
 
 %%
-"/*"                                    { comment(); }
-"//".*                                    { /* consume //-comment */ }
+"/*"            {}
+"//".*          {}
 
 "auto"					{ return(AUTO); }
 "break"					{ return(BREAK); }
@@ -73,6 +73,18 @@ static int check_type(void);
 "void"					{ return(VOID); }
 "volatile"				{ return(VOLATILE); }
 "while"					{ return(WHILE); }
+"_Alignas"                              { return ALIGNAS; }
+"_Alignof"                              { return ALIGNOF; }
+"_Atomic"                               { return ATOMIC; }
+"_Bool"                                 { return BOOL; }
+"_Complex"                              { return COMPLEX; }
+"_Generic"                              { return GENERIC; }
+"_Imaginary"                            { return IMAGINARY; }
+"_Noreturn"                             { return NORETURN; }
+"_Static_assert"                        { return STATIC_ASSERT; }
+"_Thread_local"                         { return THREAD_LOCAL; }
+"__func__"                              { return FUNC_NAME; }
+
 
 
 "..."					{ return ELLIPSIS; }
@@ -121,8 +133,8 @@ static int check_type(void);
 "^"					{ return '^'; }
 "|"					{ return '|'; }
 "?"					{ return '?'; }
-"class"     {return 'CLASS'; }
-"rt_material" {return 'MATERIAL';}
 
 {WS}+					{ /* whitespace separates tokens */ }
 .					{ /* discard bad characters */ }
+
+%%

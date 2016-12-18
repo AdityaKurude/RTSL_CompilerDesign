@@ -1,8 +1,8 @@
 /* A Bison parser, made by GNU Bison 3.0.4.  */
 
-/* Skeleton interface for Bison GLR parsers in C
+/* Bison interface for Yacc-like parsers in C
 
-   Copyright (C) 2002-2015 Free Software Foundation, Inc.
+   Copyright (C) 1984, 1989-1990, 2000-2015 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -30,8 +30,8 @@
    This special exception was added by the Free Software Foundation in
    version 2.2 of Bison.  */
 
-#ifndef YY_YY_TEST0_YY_H_INCLUDED
-# define YY_YY_TEST0_YY_H_INCLUDED
+#ifndef YY_YY_ANSI_YY_H_INCLUDED
+# define YY_YY_ANSI_YY_H_INCLUDED
 /* Debug traces.  */
 #ifndef YYDEBUG
 # define YYDEBUG 0
@@ -46,35 +46,79 @@ extern int yydebug;
   enum yytokentype
   {
     IDENTIFIER = 258,
-    INT = 259,
-    TYPE = 260,
-    FLOAT = 261,
-    QUANTIFIER = 262,
-    IF = 263,
-    ELSE = 264,
-    RETURN = 265,
-    CLASS = 266,
-    MATERIAL = 267,
-    CAMERA = 268,
-    PLUS = 269,
-    MUL = 270,
-    MINUS = 271,
-    DIV = 272,
-    ASSIGN = 273,
-    COLON = 274,
-    SEMICOLON = 275,
-    LT = 276,
-    GT = 277,
-    LPARENTHESIS = 278,
-    RPARENTHESIS = 279,
-    LBRACKET = 280,
-    RBRACKET = 281,
-    LBRACE = 282,
-    RBRACE = 283,
-    WHILE = 284,
-    FOR = 285,
-    PLUSASSIGN = 286,
-    INC = 287
+    I_CONSTANT = 259,
+    F_CONSTANT = 260,
+    STRING_LITERAL = 261,
+    FUNC_NAME = 262,
+    SIZEOF = 263,
+    token = 264,
+    PTR_OP = 265,
+    INC_OP = 266,
+    DEC_OP = 267,
+    LEFT_OP = 268,
+    RIGHT_OP = 269,
+    LE_OP = 270,
+    GE_OP = 271,
+    EQ_OP = 272,
+    NE_OP = 273,
+    AND_OP = 274,
+    OR_OP = 275,
+    MUL_ASSIGN = 276,
+    DIV_ASSIGN = 277,
+    MOD_ASSIGN = 278,
+    ADD_ASSIGN = 279,
+    SUB_ASSIGN = 280,
+    LEFT_ASSIGN = 281,
+    RIGHT_ASSIGN = 282,
+    AND_ASSIGN = 283,
+    XOR_ASSIGN = 284,
+    OR_ASSIGN = 285,
+    TYPEDEF_NAME = 286,
+    ENUMERATION_CONSTANT = 287,
+    TYPEDEF = 288,
+    EXTERN = 289,
+    STATIC = 290,
+    AUTO = 291,
+    REGISTER = 292,
+    INLINE = 293,
+    CONST = 294,
+    RESTRICT = 295,
+    VOLATILE = 296,
+    BOOL = 297,
+    CHAR = 298,
+    SHORT = 299,
+    INT = 300,
+    LONG = 301,
+    SIGNED = 302,
+    UNSIGNED = 303,
+    FLOAT = 304,
+    DOUBLE = 305,
+    VOID = 306,
+    COMPLEX = 307,
+    IMAGINARY = 308,
+    STRUCT = 309,
+    UNION = 310,
+    ENUM = 311,
+    ELLIPSIS = 312,
+    CASE = 313,
+    DEFAULT = 314,
+    IF = 315,
+    ELSE = 316,
+    SWITCH = 317,
+    WHILE = 318,
+    DO = 319,
+    FOR = 320,
+    GOTO = 321,
+    CONTINUE = 322,
+    BREAK = 323,
+    RETURN = 324,
+    ALIGNAS = 325,
+    ALIGNOF = 326,
+    ATOMIC = 327,
+    GENERIC = 328,
+    NORETURN = 329,
+    STATIC_ASSERT = 330,
+    THREAD_LOCAL = 331
   };
 #endif
 
@@ -90,4 +134,4 @@ extern YYSTYPE yylval;
 
 int yyparse (void);
 
-#endif /* !YY_YY_TEST0_YY_H_INCLUDED  */
+#endif /* !YY_YY_ANSI_YY_H_INCLUDED  */

@@ -1,0 +1,217 @@
+Nonterminals useless in grammar
+
+   parameter_list
+
+
+Terminals unused in grammar
+
+   INT
+   TYPE
+   IF
+   ELSE
+   RETURN
+   PLUS
+   MUL
+   MINUS
+   DIV
+   ASSIGN
+   LT
+   LBRACKET
+   RBRACKET
+   LBRACE
+   RBRACE
+
+
+Rules useless in grammar
+
+    7 parameter_list: parameter
+    8               | parameter_list parameter
+
+
+Grammar
+
+    0 $accept: statement $end
+
+    1 statement: function_call
+    2          | declaration
+
+    3 function_call: IDENTIFIER LPARENTHESIS parameter RPARENTHESIS SEMICOLON
+
+    4 declaration: class parameter COLON MATERIAL SEMICOLON
+
+    5 parameter: IDENTIFIER
+
+    6 class: CLASS
+
+
+Terminals, with rules where they appear
+
+$end (0) 0
+error (256)
+IDENTIFIER (258) 3 5
+INT (259)
+TYPE (260)
+IF (261)
+ELSE (262)
+RETURN (263)
+CLASS (264) 6
+MATERIAL (265) 4
+PLUS (266)
+MUL (267)
+MINUS (268)
+DIV (269)
+ASSIGN (270)
+COLON (271) 4
+SEMICOLON (272) 3 4
+LT (273)
+LPARENTHESIS (274) 3
+RPARENTHESIS (275) 3
+LBRACKET (276)
+RBRACKET (277)
+LBRACE (278)
+RBRACE (279)
+
+
+Nonterminals, with rules where they appear
+
+$accept (25)
+    on left: 0
+statement (26)
+    on left: 1 2, on right: 0
+function_call (27)
+    on left: 3, on right: 1
+declaration (28)
+    on left: 4, on right: 2
+parameter (29)
+    on left: 5, on right: 3 4
+class (30)
+    on left: 6, on right: 4
+
+
+State 0
+
+    0 $accept: . statement $end
+
+    IDENTIFIER  shift, and go to state 1
+    CLASS       shift, and go to state 2
+
+    statement      go to state 3
+    function_call  go to state 4
+    declaration    go to state 5
+    class          go to state 6
+
+
+State 1
+
+    3 function_call: IDENTIFIER . LPARENTHESIS parameter RPARENTHESIS SEMICOLON
+
+    LPARENTHESIS  shift, and go to state 7
+
+
+State 2
+
+    6 class: CLASS .
+
+    $default  reduce using rule 6 (class)
+
+
+State 3
+
+    0 $accept: statement . $end
+
+    $end  shift, and go to state 8
+
+
+State 4
+
+    1 statement: function_call .
+
+    $default  reduce using rule 1 (statement)
+
+
+State 5
+
+    2 statement: declaration .
+
+    $default  reduce using rule 2 (statement)
+
+
+State 6
+
+    4 declaration: class . parameter COLON MATERIAL SEMICOLON
+
+    IDENTIFIER  shift, and go to state 9
+
+    parameter  go to state 10
+
+
+State 7
+
+    3 function_call: IDENTIFIER LPARENTHESIS . parameter RPARENTHESIS SEMICOLON
+
+    IDENTIFIER  shift, and go to state 9
+
+    parameter  go to state 11
+
+
+State 8
+
+    0 $accept: statement $end .
+
+    $default  accept
+
+
+State 9
+
+    5 parameter: IDENTIFIER .
+
+    $default  reduce using rule 5 (parameter)
+
+
+State 10
+
+    4 declaration: class parameter . COLON MATERIAL SEMICOLON
+
+    COLON  shift, and go to state 12
+
+
+State 11
+
+    3 function_call: IDENTIFIER LPARENTHESIS parameter . RPARENTHESIS SEMICOLON
+
+    RPARENTHESIS  shift, and go to state 13
+
+
+State 12
+
+    4 declaration: class parameter COLON . MATERIAL SEMICOLON
+
+    MATERIAL  shift, and go to state 14
+
+
+State 13
+
+    3 function_call: IDENTIFIER LPARENTHESIS parameter RPARENTHESIS . SEMICOLON
+
+    SEMICOLON  shift, and go to state 15
+
+
+State 14
+
+    4 declaration: class parameter COLON MATERIAL . SEMICOLON
+
+    SEMICOLON  shift, and go to state 16
+
+
+State 15
+
+    3 function_call: IDENTIFIER LPARENTHESIS parameter RPARENTHESIS SEMICOLON .
+
+    $default  reduce using rule 3 (function_call)
+
+
+State 16
+
+    4 declaration: class parameter COLON MATERIAL SEMICOLON .
+
+    $default  reduce using rule 4 (declaration)
