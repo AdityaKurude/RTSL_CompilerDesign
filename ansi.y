@@ -28,13 +28,7 @@ token	PTR_OP INC_OP DEC_OP LEFT_OP RIGHT_OP LE_OP GE_OP EQ_OP NE_OP
 
 %%
 
-primary_expression
-	: IDENTIFIER
-	| constant
-	| string
-	| '(' expression ')'
-	| generic_selection
-	;
+
 
 constant
 	: I_CONSTANT		/* includes character_constant */
