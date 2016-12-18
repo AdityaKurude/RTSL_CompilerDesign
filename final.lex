@@ -29,6 +29,9 @@ LEADING_EXPO_FLOAT_VALUE 	{DIGIT}+[eE]("-"|"+")?{DIGIT}+(f|"lf"|"F"|"LF")?
 RTSL_CLASS	"class"
 RTSL_MATERIAL	"rt_Material"
 RTSL_CAMERA "rt_Camera"
+RTSL_TEXTURE "rt_Texture"
+RTSL_LIGHT "rt_Light"
+RTSL_PRIMITIVE "rt_Primitive"
 
 C_KEYWORDS	"break"|"case"|"const"|"continue"|"default"|"do"|"double"|"enum"|"extern"|"for"|"goto"|"sizeof"|"static"|"struct"|"switch"|"typedef"|"union"|"unsigned"
 BUILT_IN_FUNCTION	"dominantAxis"|"dot"|"hit"|"inside"|"inverse"|"luminance"|"max"|"min"|"normalize"|"perpendicularTo"|"pow"|"rand"|"reflect"|"sqrt"|"trace"
@@ -40,11 +43,9 @@ VECTOR_TYPE	[i|b]?vec[2-4]
 STATE	[r][t][_]({LETTER}+[0-9"_"]*)+
 
 
-IDENTIFIER	("_"[.]+)|({LETTER}+[0-9a-zA-Z"_"]*)
+IDENTIFIER	("_"[.]+)|({LETTER}+[0-9a-zA-Z"_"]*)|(("_"[.]+)["."]{LETTER})|(({LETTER}+[0-9a-zA-Z"_"]*)["."]{LETTER})
+
 ERROR_IDENTIFIER	[0-9]+{LETTER}*[0-9"_"]*``
-
-SWIZZLE	[.]{IDENTIFIER}
-
 %%
 
 [ \t\n\r\v\f]*	{} /*	Remove all Blanks:Includes spaces, tabs, newline and carriage return, vertical tab and form-feed.
@@ -57,6 +58,10 @@ SWIZZLE	[.]{IDENTIFIER}
 "return" {return RETURN; }
 {RTSL_MATERIAL}	{return MATERIAL ;}
 {RTSL_CAMERA} {return CAMERA; }
+{RTSL_TEXTURE} {return TEXTURE;}
+{RTSL_LIGHT} {return LIGHT;}
+{RTSL_PRIMITIVE} {return PRIMITIVE;}
+
 {CLASS_SCOPE_QUALIFIERS} {return QUANTIFIER; }
 "while" {return WHILE; }
 "for" {return FOR; }
@@ -69,6 +74,11 @@ SWIZZLE	[.]{IDENTIFIER}
 
 {RTSL_TYPE}|{VECTOR_TYPE}	{ return TYPE; }
 
+"shade"|"BSDF"|"sampleBSDF"|"evaluatePDF"|"emission" {return INTER_MATERIAL;}
+"generateRay" {return INTER_CAMERA;}
+"intersect"|"computeBounds"|"computeNormal"|"computeTextureCoordinates"|"computeDerivatives"|"generateSample"|"samplePDF" {return INTER_PRIMITIVE;}
+"lookup" {return INTER_TEXTURE;}
+"illumination" {return INTER_LIGHT;}
 "if" {return IF; }
 "else" {return ELSE; }
 ">=" {return GE_OP;}
@@ -89,7 +99,8 @@ SWIZZLE	[.]{IDENTIFIER}
 "]"	{return ']'; }
 [{]	{return '{'; }
 [}]	{return '}'; }
-{IDENTIFIER} { yylval=yytext; return IDENTIFIER; }
+{IDENTIFIER} {return IDENTIFIER; }
+
 
 
 

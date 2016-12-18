@@ -2,15 +2,19 @@
 #include <stdio.h>
 #include <string.h>
 
-#define YYSTYPE char*
 extern int yylex(); // Declared by lexer
 void yyerror(const char *s); // Declared later in file
-
-int class;
-char c[100];
-char message[] = "error message error message error message";
-
-int count=0;
+//int function_type(char*);
+void error_write(int,int);
+/*
+type =0 :CAMERA
+     =1 :PRIMITIVE
+     =2 :TEXTURE
+     =3 :MATERIAL
+     =4 :LIGHT
+*/
+int type=-1;
+int error_type=-1;
 %}
 
 %glr-parser
@@ -18,11 +22,11 @@ int count=0;
 
 %token	IDENTIFIER INT TYPE FLOAT QUANTIFIER BOOL CHAR LONG DOUBLE SIGNED UNSIGNED VOID SHORT
 %token IF ELSE RETURN
-%token CLASS MATERIAL CAMERA
+%token CLASS MATERIAL CAMERA TEXTURE LIGHT PRIMITIVE
 %token MUL_ASSIGN DIV_ASSIGN ADD_ASSIGN	SUB_ASSIGN PLUS_ASSIGN	COLON SEMICOLON LT GT
 %token WHILE FOR
 %token INC_OP DEC_OP EQ_OP GE_OP LE_OP NE_OP
-
+%token INTER_MATERIAL INTER_TEXTURE INTER_LIGHT INTER_CAMERA INTER_PRIMITIVE
 
 %%
 prog
@@ -159,21 +163,29 @@ jump_statement
 
 external_declaration
 	: functionclass_definition
-	| declaration {count=0;printf("DECLARATION \n");}
+	| declaration {printf("DECLARATION \n");}
 	;
 
 functionclass_definition
-	: type_specifier direct_declarator compound_statement {printf("FUNCTION_DEF \n");printf("%s",c);count=0;}
+	: type_specifier direct_declarator compound_statement {printf("FUNCTION_DEF \n"); error_write(type,error_type); }
   | CLASS IDENTIFIER ':' type ';'
 	;
 
 type
- :MATERIAL {printf("SHADER_DEF material \n");}
- |CAMERA {printf("SHADER_DEF camera \n"); }
+ :MATERIAL {type=3; printf("SHADER_DEF material \n");}
+ |CAMERA {type=0; printf("SHADER_DEF camera \n"); }
+ |PRIMITIVE {type=1; printf("SHADER_DEF primitive \n"); }
+ |TEXTURE {type=2; printf("SHADER_DEF texture \n"); }
+ |LIGHT {type=4; printf("SHADER_DEF light  \n"); }
 ;
 
 direct_declarator
-	: IDENTIFIER {if(count==0) strcpy(c,$1); count++; }
+	: IDENTIFIER
+  | INTER_CAMERA {error_type=0;}
+  | INTER_PRIMITIVE {error_type=1;}
+  | INTER_TEXTURE {error_type=2;}
+  | INTER_MATERIAL {error_type=3;}
+  | INTER_LIGHT {error_type=4;}
 	| direct_declarator '(' parameter_list ')'
 	| direct_declarator '(' ')'
 	;
@@ -219,7 +231,38 @@ declaration
 	 yyparse();
 	}
 
-	void yyerror(const char *s)
+	void yyerror(char const *s)
 	{
 	  fprintf(stderr, "error: %s\n", s);
 	}
+
+void error_write(int a,int b)
+{
+  char c[10];
+  char d[10];
+  if((a!=b)&& b>=0)
+   {
+     switch(a)
+     {
+       case 0:
+        strcpy(c,"camera");
+        break;
+       case 3:
+        strcpy(c,"material");
+        break;
+     }
+     switch(b)
+     {
+       case 0:
+        strcpy(d,"camera");
+        break;
+       case 3:
+        strcpy(d,"material");
+        break;
+     }
+
+     fprintf(stderr, "Error: %s cannot have an interface method of ",c);
+     fprintf(stderr,"%s \n",d);
+   }
+   error_type=-1;
+}
