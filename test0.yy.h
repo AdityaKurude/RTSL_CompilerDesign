@@ -64,13 +64,17 @@ extern int yydebug;
     COLON = 274,
     SEMICOLON = 275,
     LT = 276,
-    LPARENTHESIS = 277,
-    RPARENTHESIS = 278,
-    LBRACKET = 279,
-    RBRACKET = 280,
-    LBRACE = 281,
-    RBRACE = 282,
-    ELLIPSIS = 283
+    GT = 277,
+    LPARENTHESIS = 278,
+    RPARENTHESIS = 279,
+    LBRACKET = 280,
+    RBRACKET = 281,
+    LBRACE = 282,
+    RBRACE = 283,
+    WHILE = 284,
+    FOR = 285,
+    PLUSASSIGN = 286,
+    INC = 287
   };
 #endif
 

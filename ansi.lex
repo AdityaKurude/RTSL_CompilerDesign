@@ -1,3 +1,11 @@
+%option noyywrap
+%{
+#include "ansi.yy.h"
+int line_no=0;
+%}
+
+
+
 %e  1019
 %p  2807
 %n  371
@@ -23,21 +31,13 @@ WS  [ \t\v\n\f]
 
 %{
 #include <stdio.h>
-#include "y.tab.h"
 
 extern void yyerror(const char *);  /* prints grammar violation message */
-
-extern int sym_type(const char *);  /* returns type from symbol table */
-
-#define sym_type(identifier) IDENTIFIER /* with no symbol table, fake it */
-
-static void comment(void);
-static int check_type(void);
 %}
 
 %%
-"/*"                                    { comment(); }
-"//".*                                    { /* consume //-comment */ }
+"/*"            {}
+"//".*          {}
 
 "auto"					{ return(AUTO); }
 "break"					{ return(BREAK); }
@@ -85,21 +85,7 @@ static int check_type(void);
 "_Thread_local"                         { return THREAD_LOCAL; }
 "__func__"                              { return FUNC_NAME; }
 
-{L}{A}*					{ return check_type(); }
 
-{HP}{H}+{IS}?				{ return I_CONSTANT; }
-{NZ}{D}*{IS}?				{ return I_CONSTANT; }
-"0"{O}*{IS}?				{ return I_CONSTANT; }
-{CP}?"'"([^'\\\n]|{ES})+"'"		{ return I_CONSTANT; }
-
-{D}+{E}{FS}?				{ return F_CONSTANT; }
-{D}*"."{D}+{E}?{FS}?			{ return F_CONSTANT; }
-{D}+"."{E}?{FS}?			{ return F_CONSTANT; }
-{HP}{H}+{P}{FS}?			{ return F_CONSTANT; }
-{HP}{H}*"."{H}+{P}{FS}?			{ return F_CONSTANT; }
-{HP}{H}+"."{P}{FS}?			{ return F_CONSTANT; }
-
-({SP}?\"([^"\\\n]|{ES})*\"{WS}*)+	{ return STRING_LITERAL; }
 
 "..."					{ return ELLIPSIS; }
 ">>="					{ return RIGHT_ASSIGN; }
@@ -152,40 +138,3 @@ static int check_type(void);
 .					{ /* discard bad characters */ }
 
 %%
-
-int yywrap(void)        /* called at end of input */
-{
-    return 1;           /* terminate now */
-}
-
-static void comment(void)
-{
-    int c;
-
-    while ((c = input()) != 0)
-        if (c == '*')
-        {
-            while ((c = input()) == '*')
-                ;
-
-            if (c == '/')
-                return;
-
-            if (c == 0)
-                break;
-        }
-    yyerror("unterminated comment");
-}
-
-static int check_type(void)
-{
-    switch (sym_type(yytext))
-    {
-    case TYPEDEF_NAME:                /* previously defined */
-        return TYPEDEF_NAME;
-    case ENUMERATION_CONSTANT:        /* previously defined */
-        return ENUMERATION_CONSTANT;
-    default:                          /* includes undefined */
-        return IDENTIFIER;
-    }
-}

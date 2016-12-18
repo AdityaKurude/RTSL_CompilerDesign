@@ -1,3 +1,8 @@
+Terminals unused in grammar
+
+   token
+
+
 State 27 conflicts: 1 shift/reduce
 State 455 conflicts: 1 shift/reduce
 
@@ -398,242 +403,243 @@ F_CONSTANT (260) 7
 STRING_LITERAL (261) 10 235
 FUNC_NAME (262) 11
 SIZEOF (263) 33 34
-PTR_OP (264) 22
-INC_OP (265) 23 30
-DEC_OP (266) 24 31
-LEFT_OP (267) 52
-RIGHT_OP (268) 53
-LE_OP (269) 57
-GE_OP (270) 58
-EQ_OP (271) 60
-NE_OP (272) 61
-AND_OP (273) 69
-OR_OP (274) 71
-MUL_ASSIGN (275) 77
-DIV_ASSIGN (276) 78
-MOD_ASSIGN (277) 79
-ADD_ASSIGN (278) 80
-SUB_ASSIGN (279) 81
-LEFT_ASSIGN (280) 82
-RIGHT_ASSIGN (281) 83
-AND_ASSIGN (282) 84
-XOR_ASSIGN (283) 85
-OR_ASSIGN (284) 86
-TYPEDEF_NAME (285) 128
-ENUMERATION_CONSTANT (286) 8
-TYPEDEF (287) 107
-EXTERN (288) 108
-STATIC (289) 109 172 173 175 205 206 207 213 214 216
-AUTO (290) 111
-REGISTER (291) 112
-INLINE (292) 162
-CONST (293) 158
-RESTRICT (294) 159
-VOLATILE (295) 160
-BOOL (296) 122
-CHAR (297) 114
-SHORT (298) 115
-INT (299) 116
-LONG (300) 117
-SIGNED (301) 120
-UNSIGNED (302) 121
-FLOAT (303) 118
-DOUBLE (304) 119
-VOID (305) 113
-COMPLEX (306) 123
-IMAGINARY (307) 124
-STRUCT (308) 132
-UNION (309) 133
-ENUM (310) 148 149 150 151 152
-ELLIPSIS (311) 188
-CASE (312) 243
-DEFAULT (313) 16 244
-IF (314) 253 254
-ELSE (315) 253
-SWITCH (316) 255
-WHILE (317) 256 257
-DO (318) 257
-FOR (319) 258 259 260 261
-GOTO (320) 262
-CONTINUE (321) 263
-BREAK (322) 264
-RETURN (323) 265 266
-ALIGNAS (324) 164 165
-ALIGNOF (325) 35
-ATOMIC (326) 157 161
-GENERIC (327) 12
-NORETURN (328) 163
-STATIC_ASSERT (329) 235
-THREAD_LOCAL (330) 110
+token (264)
+PTR_OP (265) 22
+INC_OP (266) 23 30
+DEC_OP (267) 24 31
+LEFT_OP (268) 52
+RIGHT_OP (269) 53
+LE_OP (270) 57
+GE_OP (271) 58
+EQ_OP (272) 60
+NE_OP (273) 61
+AND_OP (274) 69
+OR_OP (275) 71
+MUL_ASSIGN (276) 77
+DIV_ASSIGN (277) 78
+MOD_ASSIGN (278) 79
+ADD_ASSIGN (279) 80
+SUB_ASSIGN (280) 81
+LEFT_ASSIGN (281) 82
+RIGHT_ASSIGN (282) 83
+AND_ASSIGN (283) 84
+XOR_ASSIGN (284) 85
+OR_ASSIGN (285) 86
+TYPEDEF_NAME (286) 128
+ENUMERATION_CONSTANT (287) 8
+TYPEDEF (288) 107
+EXTERN (289) 108
+STATIC (290) 109 172 173 175 205 206 207 213 214 216
+AUTO (291) 111
+REGISTER (292) 112
+INLINE (293) 162
+CONST (294) 158
+RESTRICT (295) 159
+VOLATILE (296) 160
+BOOL (297) 122
+CHAR (298) 114
+SHORT (299) 115
+INT (300) 116
+LONG (301) 117
+SIGNED (302) 120
+UNSIGNED (303) 121
+FLOAT (304) 118
+DOUBLE (305) 119
+VOID (306) 113
+COMPLEX (307) 123
+IMAGINARY (308) 124
+STRUCT (309) 132
+UNION (310) 133
+ENUM (311) 148 149 150 151 152
+ELLIPSIS (312) 188
+CASE (313) 243
+DEFAULT (314) 16 244
+IF (315) 253 254
+ELSE (316) 253
+SWITCH (317) 255
+WHILE (318) 256 257
+DO (319) 257
+FOR (320) 258 259 260 261
+GOTO (321) 262
+CONTINUE (322) 263
+BREAK (323) 264
+RETURN (324) 265 266
+ALIGNAS (325) 164 165
+ALIGNOF (326) 35
+ATOMIC (327) 157 161
+GENERIC (328) 12
+NORETURN (329) 163
+STATIC_ASSERT (330) 235
+THREAD_LOCAL (331) 110
 
 
 Nonterminals, with rules where they appear
 
-$accept (100)
+$accept (101)
     on left: 0
-primary_expression (101)
+primary_expression (102)
     on left: 1 2 3 4 5, on right: 17
-constant (102)
+constant (103)
     on left: 6 7 8, on right: 2
-enumeration_constant (103)
+enumeration_constant (104)
     on left: 9, on right: 155 156
-string (104)
+string (105)
     on left: 10 11, on right: 3
-generic_selection (105)
+generic_selection (106)
     on left: 12, on right: 5
-generic_assoc_list (106)
+generic_assoc_list (107)
     on left: 13 14, on right: 12 14
-generic_association (107)
+generic_association (108)
     on left: 15 16, on right: 13 14
-postfix_expression (108)
+postfix_expression (109)
     on left: 17 18 19 20 21 22 23 24 25 26, on right: 18 19 20 21 22
     23 24 29
-argument_expression_list (109)
+argument_expression_list (110)
     on left: 27 28, on right: 20 28
-unary_expression (110)
+unary_expression (111)
     on left: 29 30 31 32 33 34 35, on right: 30 31 33 42 75
-unary_operator (111)
+unary_operator (112)
     on left: 36 37 38 39 40 41, on right: 32
-cast_expression (112)
+cast_expression (113)
     on left: 42 43, on right: 32 43 44 45 46 47
-multiplicative_expression (113)
+multiplicative_expression (114)
     on left: 44 45 46 47, on right: 45 46 47 48 49 50
-additive_expression (114)
+additive_expression (115)
     on left: 48 49 50, on right: 49 50 51 52 53
-shift_expression (115)
+shift_expression (116)
     on left: 51 52 53, on right: 52 53 54 55 56 57 58
-relational_expression (116)
+relational_expression (117)
     on left: 54 55 56 57 58, on right: 55 56 57 58 59 60 61
-equality_expression (117)
+equality_expression (118)
     on left: 59 60 61, on right: 60 61 62 63
-and_expression (118)
+and_expression (119)
     on left: 62 63, on right: 63 64 65
-exclusive_or_expression (119)
+exclusive_or_expression (120)
     on left: 64 65, on right: 65 66 67
-inclusive_or_expression (120)
+inclusive_or_expression (121)
     on left: 66 67, on right: 67 68 69
-logical_and_expression (121)
+logical_and_expression (122)
     on left: 68 69, on right: 69 70 71
-logical_or_expression (122)
+logical_or_expression (123)
     on left: 70 71, on right: 71 72 73
-conditional_expression (123)
+conditional_expression (124)
     on left: 72 73, on right: 73 74 89
-assignment_expression (124)
+assignment_expression (125)
     on left: 74 75, on right: 12 15 16 27 28 75 87 88 172 173 175 176
     178 205 206 207 208 210 213 214 215 216 218 225
-assignment_operator (125)
+assignment_operator (126)
     on left: 76 77 78 79 80 81 82 83 84 85 86, on right: 75
-expression (126)
+expression (127)
     on left: 87 88, on right: 4 18 73 88 252 253 254 255 256 257 259
     261 266
-constant_expression (127)
+constant_expression (128)
     on left: 89, on right: 145 146 155 165 233 235 243
-declaration (128)
+declaration (129)
     on left: 90 91 92, on right: 249 260 261 270 273 274
-declaration_specifiers (129)
+declaration_specifiers (130)
     on left: 93 94 95 96 97 98 99 100 101 102, on right: 90 91 93 95
     97 99 101 192 193 194 271 272
-init_declarator_list (130)
+init_declarator_list (131)
     on left: 103 104, on right: 91 104
-init_declarator (131)
+init_declarator (132)
     on left: 105 106, on right: 103 104
-storage_class_specifier (132)
+storage_class_specifier (133)
     on left: 107 108 109 110 111 112, on right: 93 94
-type_specifier (133)
+type_specifier (134)
     on left: 113 114 115 116 117 118 119 120 121 122 123 124 125 126
     127 128, on right: 95 96 139 140
-struct_or_union_specifier (134)
+struct_or_union_specifier (135)
     on left: 129 130 131, on right: 126
-struct_or_union (135)
+struct_or_union (136)
     on left: 132 133, on right: 129 130 131
-struct_declaration_list (136)
+struct_declaration_list (137)
     on left: 134 135, on right: 129 130 135
-struct_declaration (137)
+struct_declaration (138)
     on left: 136 137 138, on right: 134 135
-specifier_qualifier_list (138)
+specifier_qualifier_list (139)
     on left: 139 140 141 142, on right: 136 137 139 141 197 198
-struct_declarator_list (139)
+struct_declarator_list (140)
     on left: 143 144, on right: 137 144
-struct_declarator (140)
+struct_declarator (141)
     on left: 145 146 147, on right: 143 144
-enum_specifier (141)
+enum_specifier (142)
     on left: 148 149 150 151 152, on right: 127
-enumerator_list (142)
+enumerator_list (143)
     on left: 153 154, on right: 148 149 150 151 154
-enumerator (143)
+enumerator (144)
     on left: 155 156, on right: 153 154
-atomic_type_specifier (144)
+atomic_type_specifier (145)
     on left: 157, on right: 125
-type_qualifier (145)
+type_qualifier (146)
     on left: 158 159 160 161, on right: 97 98 141 142 186 187
-function_specifier (146)
+function_specifier (147)
     on left: 162 163, on right: 99 100
-alignment_specifier (147)
+alignment_specifier (148)
     on left: 164 165, on right: 101 102
-declarator (148)
+declarator (149)
     on left: 166 167, on right: 105 106 146 147 169 192 271 272
-direct_declarator (149)
+direct_declarator (150)
     on left: 168 169 170 171 172 173 174 175 176 177 178 179 180 181,
     on right: 166 167 170 171 172 173 174 175 176 177 178 179 180 181
-pointer (150)
+pointer (151)
     on left: 182 183 184 185, on right: 166 182 184 199 200
-type_qualifier_list (151)
+type_qualifier_list (152)
     on left: 186 187, on right: 172 174 175 176 177 182 183 187 205
     207 208 209 213 215 216 217
-parameter_type_list (152)
+parameter_type_list (153)
     on left: 188 189, on right: 179 220 222
-parameter_list (153)
+parameter_list (154)
     on left: 190 191, on right: 188 189 191
-parameter_declaration (154)
+parameter_declaration (155)
     on left: 192 193 194, on right: 190 191
-identifier_list (155)
+identifier_list (156)
     on left: 195 196, on right: 181 196
-type_name (156)
+type_name (157)
     on left: 197 198, on right: 15 25 26 34 35 43 157 164
-abstract_declarator (157)
+abstract_declarator (158)
     on left: 199 200 201, on right: 193 197 202
-direct_abstract_declarator (158)
+direct_abstract_declarator (159)
     on left: 202 203 204 205 206 207 208 209 210 211 212 213 214 215
     216 217 218 219 220 221 222, on right: 199 201 211 212 213 214
     215 216 217 218 221 222
-initializer (159)
+initializer (160)
     on left: 223 224 225, on right: 105 226 227 228 229
-initializer_list (160)
+initializer_list (161)
     on left: 226 227 228 229, on right: 25 26 223 224 228 229
-designation (161)
+designation (162)
     on left: 230, on right: 226 228
-designator_list (162)
+designator_list (163)
     on left: 231 232, on right: 230 232
-designator (163)
+designator (164)
     on left: 233 234, on right: 231 232
-static_assert_declaration (164)
+static_assert_declaration (165)
     on left: 235, on right: 92 138
-statement (165)
+statement (166)
     on left: 236 237 238 239 240 241, on right: 242 243 244 250 253
     254 255 256 257 258 259 260 261
-labeled_statement (166)
+labeled_statement (167)
     on left: 242 243 244, on right: 236
-compound_statement (167)
+compound_statement (168)
     on left: 245 246, on right: 237 271 272
-block_item_list (168)
+block_item_list (169)
     on left: 247 248, on right: 246 248
-block_item (169)
+block_item (170)
     on left: 249 250, on right: 247 248
-expression_statement (170)
+expression_statement (171)
     on left: 251 252, on right: 238 258 259 260 261
-selection_statement (171)
+selection_statement (172)
     on left: 253 254 255, on right: 239
-iteration_statement (172)
+iteration_statement (173)
     on left: 256 257 258 259 260 261, on right: 240
-jump_statement (173)
+jump_statement (174)
     on left: 262 263 264 265 266, on right: 241
-translation_unit (174)
+translation_unit (175)
     on left: 267 268, on right: 0 268
-external_declaration (175)
+external_declaration (176)
     on left: 269 270, on right: 267 268
-function_definition (176)
+function_definition (177)
     on left: 271 272, on right: 269
-declaration_list (177)
+declaration_list (178)
     on left: 273 274, on right: 271 274
 
 

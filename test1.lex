@@ -30,8 +30,7 @@ RTSL_CLASS	"class"
 RTSL_MATERIAL	"rt_Material"
 RTSL_CAMERA "rt_Camera"
 
-C_KEYWORDS	"break"|"case"|"const"|"continue"|"default"|"do"|"double"|"enum"|"extern"|"for"|"goto"|"sizeof"|"static"|"struct"|"switch"|"typedef"|"union"|"unsigned"|"while"
-RTSL_KEYWORDS	"illuminance"|"ambient"
+C_KEYWORDS	"break"|"case"|"const"|"continue"|"default"|"do"|"double"|"enum"|"extern"|"for"|"goto"|"sizeof"|"static"|"struct"|"switch"|"typedef"|"union"|"unsigned"
 BUILT_IN_FUNCTION	"dominantAxis"|"dot"|"hit"|"inside"|"inverse"|"luminance"|"max"|"min"|"normalize"|"perpendicularTo"|"pow"|"rand"|"reflect"|"sqrt"|"trace"
 
 RTSL_TYPE	"int"|"float"|"bool"|"void"
@@ -59,6 +58,9 @@ SWIZZLE	[.]{IDENTIFIER}
 {RTSL_MATERIAL}	{return MATERIAL ;}
 {RTSL_CAMERA} {return CAMERA; }
 {CLASS_SCOPE_QUALIFIERS} {return QUANTIFIER; }
+"while" {return WHILE; }
+"for" {return FOR; }
+"++" {return INC;}
 
 {RTSL_CLASS}	{return CLASS;}
 
@@ -78,6 +80,8 @@ SWIZZLE	[.]{IDENTIFIER}
 [:]	{return COLON;}
 [;]	{return SEMICOLON;}
 [<] {return LT; }
+[>] {return GT; }
+"+=" {return PLUSASSIGN; }
 [(]	{return LPARENTHESIS ;}
 [)]	{return RPARENTHESIS ;}
 "["	{return LBRACKET; }

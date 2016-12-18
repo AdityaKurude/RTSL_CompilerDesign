@@ -1,5 +1,14 @@
+%{
+#include <stdio.h>
+
+extern int yylex(); // Declared by lexer
+void yyerror(const char *s); // Declared later in file
+%}
+
+
+
 %token	IDENTIFIER I_CONSTANT F_CONSTANT STRING_LITERAL FUNC_NAME SIZEOF
-%token	PTR_OP INC_OP DEC_OP LEFT_OP RIGHT_OP LE_OP GE_OP EQ_OP NE_OP
+token	PTR_OP INC_OP DEC_OP LEFT_OP RIGHT_OP LE_OP GE_OP EQ_OP NE_OP
 %token	AND_OP OR_OP MUL_ASSIGN DIV_ASSIGN MOD_ASSIGN ADD_ASSIGN
 %token	SUB_ASSIGN LEFT_ASSIGN RIGHT_ASSIGN AND_ASSIGN
 %token	XOR_ASSIGN OR_ASSIGN
@@ -16,6 +25,7 @@
 %token	ALIGNAS ALIGNOF ATOMIC GENERIC NORETURN STATIC_ASSERT THREAD_LOCAL
 
 %start translation_unit
+
 %%
 
 primary_expression
@@ -33,7 +43,7 @@ constant
 	;
 
 enumeration_constant		/* before it has been defined as such */
-	: IDENTIFIER
+	: IDENTIFIERis
 	;
 
 string
@@ -525,7 +535,12 @@ declaration_list
 	;
 
 %%
-#include <stdio.h>
+
+int main(int argc, char const *argv[]) {
+ extern FILE* yyin;
+ yyin = fopen(argv[1],"r");
+ yyparse();
+}
 
 void yyerror(const char *s)
 {
